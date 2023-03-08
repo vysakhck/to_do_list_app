@@ -71,98 +71,58 @@ class _TodoAppState extends State<TodoApp> {
             padding: EdgeInsets.only(top: 60),
             height: 270,
             width: 430,
-            color: Color(0xF1505AB6),
+            // color: Color(0xF1505AB6),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.tealAccent[100]!,
+                  Colors.tealAccent[200]!,
+                  Color(0xFFEAE7E7),
+                ],
+              ),
+            ),
             child: Column(
               children: [
-                Container(
-                  width: double.infinity,
-                  height: 64.0,
-
-                  // width: 300,
-                  child: Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.center,
-                        child: IconButton(
-                          // height: 76,
-                          // width: 76,
-                          icon: Image.asset(
-                            'assets/person2.jpg',
-                          ),
-
-                          iconSize: 76,
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => MyStatefulWidget(),
-                              ),
-                            );
-                          },
-                        ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(),
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          icon: Icon(Icons.more_vert_rounded),
-                          color: Colors.white,
-                          iconSize: 40,
-                          onPressed: () {
-                            Drawer(
-                              child: ListView(
-                                padding: EdgeInsets.zero,
-                                children: [
-                                  DrawerHeader(
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                    ),
-                                    child: Text('Drawer Header'),
-                                  ),
-                                  ListTile(
-                                    title: Text('Item 1'),
-                                    onTap: () {},
-                                  ),
-                                  ListTile(
-                                    title: Text('Item 2'),
-                                    onTap: () {},
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
+                    );
+                  },
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundImage: NetworkImage(
+                        'https://api.dicebear.com/5.x/fun-emoji/png?seed=Buster'),
                   ),
                 ),
                 SizedBox(
                   height: 16,
                 ),
                 Container(
-                    child: Text('Hi Vysakh',
-                        style: GoogleFonts.poppins(
-                            fontSize: 26,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white))),
+                  child: Text(
+                    'Hi Vysakh',
+                    style: GoogleFonts.poppins(
+                      fontSize: 26,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
                 // fontSize: 24,
                 // fontWeight: FontWeight.w500,
                 // color: Colors.white),)
 
-                SizedBox(
-                  height: 18,
-                ),
-                Container(
-                  // margin: const EdgeInsets.only(top: 10, left: 20)
-
-                  child: Text(
-                    DateFormat.yMMMMd().format(DateTime.now()),
-                    style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white),
+                Text(
+                  DateFormat.yMMMMd().format(DateTime.now()),
+                  style: GoogleFonts.poppins(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.blue,
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
                 ),
               ],
             ),
@@ -192,27 +152,46 @@ class _TodoAppState extends State<TodoApp> {
               ),
             ),
           ),
-          Container(
-            // height: 60,
-            // width: 60,
-            alignment: Alignment.bottomRight,
-            margin: const EdgeInsets.only(bottom: 34, left: 18),
+          Align(
+            alignment: Alignment.centerRight,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: ElevatedButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (context) => _buildBottomSheet(context));
-                },
-                style: ElevatedButton.styleFrom(
-                    minimumSize: Size(60, 60),
-                    backgroundColor: Color(0xF1505AB6),
-                    alignment: Alignment.center,
-                    shape: CircleBorder()),
-                child: Icon(
-                  Icons.add,
-                  size: 30,
+              padding: const EdgeInsets.all(24.0),
+              child: Material(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)),
+                child: Container(
+                  height: 60,
+                  width: 60,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Colors.tealAccent[100]!,
+                          Colors.tealAccent[200]!,
+                          Colors.blue
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(16)),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (context) => _buildBottomSheet(context));
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(80, 60),
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: Colors.black,
+                      alignment: Alignment.center,
+                      shadowColor: Colors.transparent,
+                    ),
+                    child: Icon(
+                      Icons.add,
+                      size: 30,
+                    ),
+                  ),
                 ),
               ),
             ),

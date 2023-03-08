@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list_app/main.dart';
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _LoginPageState extends State<LoginPage> {
   final nameController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -16,11 +16,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        // backgroundColor: Color.fromARGB(255, 239, 235, 235),
-        appBar: AppBar(
-          title: Text('LogIn'),
-          backgroundColor: Color(0xF1505AB6),
-        ),
         body: Padding(
           padding: const EdgeInsets.all(20),
           child: ListView(

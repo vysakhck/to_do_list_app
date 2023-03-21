@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_list_app/class.dart';
-import 'logIn.dart';
+import 'package:to_do_list_app/profile.dart';
 
 import 'Task.dart';
 
@@ -53,152 +53,182 @@ class _TodoAppState extends State<TodoApp> {
     });
   }
 
-  // ignore: annotate_overrides
-  // void initState() {
-  //   dateinput.text = ""; //set the initial value of text field
-  //   super.initState();
-  // }
   int _selectedRemind = 5;
 
   String _selectedRepeat = "None";
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      Column(
-        children: [
-          Container(
-            padding: EdgeInsets.only(top: 60),
-            height: 270,
-            width: 430,
-            // color: Color(0xF1505AB6),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.tealAccent[100]!,
-                  Colors.tealAccent[200]!,
-                  Color(0xFFEAE7E7),
-                ],
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      extendBodyBehindAppBar: true,
+      endDrawer: Drawer(
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              decoration: BoxDecoration(
+                color: Color(0xEF505BC1),
+              ),
+              accountName: Text(
+                "Vysakh Ck",
+                style: GoogleFonts.poppins(fontSize: 18),
+              ),
+              accountEmail: Text(
+                "vysakh@gmail.com",
+                style: GoogleFonts.poppins(fontSize: 14),
+              ),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: ExactAssetImage('assets/person.jpg'),
               ),
             ),
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => LoginPage(),
-                      ),
-                    );
-                  },
-                  child: CircleAvatar(
-                    radius: 50,
-                    backgroundImage: NetworkImage(
-                        'https://api.dicebear.com/5.x/fun-emoji/png?seed=Buster'),
+            ListTile(
+              title: Text(
+                'Setting',
+                style: GoogleFonts.poppins(fontSize: 18),
+              ),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+          ],
+        ),
+      ),
+      backgroundColor: const Color(0xFFEAE7E7),
+      body: Stack(children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.only(top: 60),
+              height: 280,
+              width: double.infinity,
+              // color: Color(0xF1505AB6),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xF1505AB6),
+                    Color(0xEE8490F7),
+                  ],
+                ),
+              ),
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => UserInfromationScreen(),
+                        ),
+                      );
+                    },
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundImage: ExactAssetImage('assets/person.jpg'),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Container(
-                  child: Text(
-                    'Hi Vysakh',
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Container(
+                    child: Text(
+                      'Hi Vysakh',
+                      style: GoogleFonts.prompt(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 18,
+                  ),
+                  Text(
+                    DateFormat.yMMMMd().format(DateTime.now()),
                     style: GoogleFonts.poppins(
-                      fontSize: 26,
+                      fontSize: 18,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),
                   ),
-                ),
-                // fontSize: 24,
-                // fontWeight: FontWeight.w500,
-                // color: Colors.white),)
-
-                Text(
-                  DateFormat.yMMMMd().format(DateTime.now()),
+                ],
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(topRight: Radius.circular(22)),
+              ),
+              margin: const EdgeInsets.only(top: 20, bottom: 20),
+              child: Text('To-Do List',
                   style: GoogleFonts.poppins(
-                    fontSize: 18,
+                    fontSize: 24,
                     fontWeight: FontWeight.w600,
-                    color: Colors.blue,
-                  ),
+                    color: Color(0xEF505BC1),
+                  )),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _todoList.length,
+                itemBuilder: (context, index) => Tasks(
+                  todo: _todoList[index],
+                  onCompleate: onTaskCompleate,
+                  onDelete: onTaskDelete,
                 ),
-              ],
-            ),
-          ),
-          Container(
-            // height: 440,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(topRight: Radius.circular(22)),
-              // color: Color.fromARGB(255, 212, 165, 25),
-            ),
-            margin: const EdgeInsets.only(top: 20, bottom: 20),
-
-            child: Text('To-Do List',
-                style: GoogleFonts.poppins(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xF1505AB6),
-                )),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _todoList.length,
-              itemBuilder: (context, index) => Tasks(
-                todo: _todoList[index],
-                onCompleate: onTaskCompleate,
-                onDelete: onTaskDelete,
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Material(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16)),
-                child: Container(
-                  height: 60,
-                  width: 60,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Colors.tealAccent[100]!,
-                          Colors.tealAccent[200]!,
-                          Colors.blue
-                        ],
-                      ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Material(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16)),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: (context) => _buildBottomSheet(context));
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(80, 60),
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: Colors.black,
-                      alignment: Alignment.center,
-                      shadowColor: Colors.transparent,
-                    ),
-                    child: Icon(
-                      Icons.add,
-                      size: 30,
+                  child: Container(
+                    height: 60,
+                    width: 60,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xF1505AB6),
+                            Color(0xEE8490F7),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(16)),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) => _buildBottomSheet(context));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(80, 60),
+                        backgroundColor: Colors.transparent,
+                        foregroundColor: Colors.black,
+                        alignment: Alignment.center,
+                        shadowColor: Colors.transparent,
+                      ),
+                      child: Icon(
+                        Icons.add,
+                        size: 30,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          )
-        ],
-      ),
-    ]);
+            )
+          ],
+        ),
+      ]),
+    );
   }
 
   SingleChildScrollView _buildBottomSheet(BuildContext context) {
@@ -216,7 +246,8 @@ class _TodoAppState extends State<TodoApp> {
               children: [
                 Text(
                   'Add task',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.poppins(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -224,14 +255,19 @@ class _TodoAppState extends State<TodoApp> {
                     _addTodoItem(_todoController.text);
                   },
                   style: ElevatedButton.styleFrom(
+                      foregroundColor: Color(0xF1505AB6),
+                      backgroundColor: Color(0xEE8490F7),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(999)),
-                      backgroundColor: const Color(0xF1505AB6),
+                      // backgroundColor: const Color(0xF1505AB6),
                       minimumSize: Size(92, 42),
                       elevation: 0),
                   child: Text(
                     'Done',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ),
               ],
@@ -239,9 +275,10 @@ class _TodoAppState extends State<TodoApp> {
             const SizedBox(
               height: 22,
             ),
-            const Text(
+            Text(
               'Title',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              style: GoogleFonts.poppins(
+                  fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const SizedBox(
               height: 12,
@@ -281,9 +318,10 @@ class _TodoAppState extends State<TodoApp> {
             const SizedBox(
               height: 12,
             ),
-            const Text(
+            Text(
               'Date',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              style: GoogleFonts.poppins(
+                  fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const SizedBox(
               height: 12,
@@ -332,7 +370,7 @@ class _TodoAppState extends State<TodoApp> {
                     children: [
                       Text(
                         'Start Time',
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(
@@ -375,7 +413,7 @@ class _TodoAppState extends State<TodoApp> {
                     children: [
                       Text(
                         'End Time',
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(
@@ -410,9 +448,10 @@ class _TodoAppState extends State<TodoApp> {
             const SizedBox(
               height: 12,
             ),
-            const Text(
+            Text(
               'Remind',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              style: GoogleFonts.poppins(
+                  fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const SizedBox(
               height: 12,
@@ -453,9 +492,10 @@ class _TodoAppState extends State<TodoApp> {
             const SizedBox(
               height: 12,
             ),
-            const Text(
+            Text(
               'Repeat',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              style: GoogleFonts.poppins(
+                  fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const SizedBox(
               height: 12,
